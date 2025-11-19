@@ -1,6 +1,6 @@
 {
   "name": "@llm-marketplace/publishing-service",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Publishing service for LLM Marketplace - handles service registration, validation, and versioning",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,12 @@
     "lint": "eslint src --ext .ts",
     "format": "prettier --write \"src/**/*.ts\""
   },
-  "keywords": ["llm", "marketplace", "publishing", "microservice"],
+  "keywords": [
+    "llm",
+    "marketplace",
+    "publishing",
+    "microservice"
+  ],
   "author": "LLM Marketplace Team",
   "license": "MIT",
   "dependencies": {
