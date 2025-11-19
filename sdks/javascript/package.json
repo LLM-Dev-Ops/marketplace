@@ -1,10 +1,14 @@
 {
-  "name": "@llm-marketplace/sdk",
-  "version": "1.0.0",
+  "name": "@llm-dev-ops/llm-marketplace-sdk",
+  "version": "1.1.0",
   "description": "Official JavaScript/TypeScript SDK for LLM Marketplace",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "module": "dist/index.mjs",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -43,12 +47,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/llm-marketplace/sdk-javascript.git"
+    "url": "https://github.com/globalbusinessadvisors/llm-marketplace.git",
+    "directory": "sdks/javascript"
   },
   "bugs": {
-    "url": "https://github.com/llm-marketplace/sdk-javascript/issues"
+    "url": "https://github.com/globalbusinessadvisors/llm-marketplace/issues"
   },
-  "homepage": "https://github.com/llm-marketplace/sdk-javascript#readme",
+  "homepage": "https://github.com/globalbusinessadvisors/llm-marketplace/tree/main/sdks/javascript#readme",
   "engines": {
     "node": ">=18.0.0"
   },

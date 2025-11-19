@@ -1,8 +1,19 @@
 {
-  "name": "@llm-marketplace/graphql-gateway",
-  "version": "1.0.0",
+  "name": "@llm-dev-ops/graphql-gateway",
+  "version": "1.1.0",
   "description": "GraphQL API Gateway for LLM Marketplace",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "src/schema"
+  ],
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
@@ -25,6 +36,15 @@
   ],
   "author": "LLM Marketplace Team",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/globalbusinessadvisors/llm-marketplace.git",
+    "directory": "services/graphql-gateway"
+  },
+  "bugs": {
+    "url": "https://github.com/globalbusinessadvisors/llm-marketplace/issues"
+  },
+  "homepage": "https://github.com/globalbusinessadvisors/llm-marketplace/tree/main/services/graphql-gateway#readme",
   "dependencies": {
     "@apollo/server": "^4.10.0",
     "@apollo/subgraph": "^2.6.1",

@@ -1,11 +1,11 @@
 {
   "name": "llm-marketplace",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Enterprise LLM Marketplace Platform - Discovery, Publishing, and Consumption of LLM Services",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/org/llm-marketplace.git"
+    "url": "https://github.com/globalbusinessadvisors/llm-marketplace.git"
   },
   "author": "LLM Marketplace Team",
   "license": "MIT",
@@ -16,12 +16,21 @@
   },
   "workspaces": [
     "services/publishing",
-    "services/admin"
+    "services/admin",
+    "services/model-marketplace",
+    "services/tenant-management",
+    "services/graphql-gateway",
+    "sdks/javascript",
+    "tests/e2e"
   ],
   "scripts": {
     "build": "npm run build --workspaces",
     "build:publishing": "npm run build --workspace=services/publishing",
     "build:admin": "npm run build --workspace=services/admin",
+    "build:model-marketplace": "npm run build --workspace=services/model-marketplace",
+    "build:tenant-management": "npm run build --workspace=services/tenant-management",
+    "build:graphql-gateway": "npm run build --workspace=services/graphql-gateway",
+    "build:sdk": "npm run build --workspace=sdks/javascript",
     "dev": "npm run dev --workspaces --if-present",
     "dev:publishing": "npm run dev --workspace=services/publishing",
     "dev:admin": "npm run dev --workspace=services/admin",
@@ -44,7 +53,13 @@
     "migrate:up": "npm run migrate:up --workspace=services/publishing",
     "migrate:down": "npm run migrate:down --workspace=services/publishing",
     "migrate:create": "npm run migrate:create --workspace=services/publishing",
-    "seed": "npm run seed --workspace=services/publishing"
+    "seed": "npm run seed --workspace=services/publishing",
+    "version:patch": "npm version patch --workspaces --no-git-tag-version",
+    "version:minor": "npm version minor --workspaces --no-git-tag-version",
+    "version:major": "npm version major --workspaces --no-git-tag-version",
+    "prepublishOnly": "npm run build && npm run test",
+    "publish:packages": "npm publish --workspaces --access public",
+    "publish:dry-run": "npm publish --workspaces --access public --dry-run"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
