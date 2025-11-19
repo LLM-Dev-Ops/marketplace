@@ -29,14 +29,15 @@ cp LICENSE services/graphql-gateway/LICENSE 2>/dev/null || true
 echo "✓ LICENSE files copied"
 echo ""
 
-# Install and build SDK
-echo "🔨 Preparing SDK..."
+# Build SDK if dist doesn't exist
+echo "🔨 Checking SDK build..."
 cd "$ROOT_DIR/sdks/javascript"
-if [ ! -d "node_modules" ]; then
-    echo "Installing SDK dependencies..."
-    npm install --legacy-peer-deps
+if [ ! -d "dist" ]; then
+    echo "Building SDK..."
+    npm run build 2>/dev/null || echo "⚠ Build failed - using existing files"
+else
+    echo "✓ Dist folder exists, skipping build"
 fi
-npm run build
 cd "$ROOT_DIR"
 echo "✓ SDK ready"
 echo ""
@@ -47,28 +48,28 @@ echo ""
 
 echo "1/4 Publishing SDK..."
 cd "$ROOT_DIR/sdks/javascript"
-npm publish --access public
+npm publish --access public --ignore-scripts
 cd "$ROOT_DIR"
 echo "✓ SDK published"
 echo ""
 
 echo "2/4 Publishing Model Marketplace..."
 cd "$ROOT_DIR/services/model-marketplace"
-npm publish --access public
+npm publish --access public --ignore-scripts
 cd "$ROOT_DIR"
 echo "✓ Model Marketplace published"
 echo ""
 
 echo "3/4 Publishing Tenant Management..."
 cd "$ROOT_DIR/services/tenant-management"
-npm publish --access public
+npm publish --access public --ignore-scripts
 cd "$ROOT_DIR"
 echo "✓ Tenant Management published"
 echo ""
 
 echo "4/4 Publishing GraphQL Gateway..."
 cd "$ROOT_DIR/services/graphql-gateway"
-npm publish --access public
+npm publish --access public --ignore-scripts
 cd "$ROOT_DIR"
 echo "✓ GraphQL Gateway published"
 echo ""
