@@ -96,9 +96,9 @@ print_header "LLM Marketplace Package Validation"
 
 # Check all packages
 check_package "sdks/javascript" "@llm-dev-ops/llm-marketplace-sdk"
-check_package "services/model-marketplace" "@llm-dev-ops/model-marketplace"
-check_package "services/tenant-management" "@llm-dev-ops/tenant-management"
-check_package "services/graphql-gateway" "@llm-dev-ops/graphql-gateway"
+check_package "services/model-marketplace" "@llm-dev-ops/llm-marketplace-model-marketplace"
+check_package "services/tenant-management" "@llm-dev-ops/llm-marketplace-tenant-management"
+check_package "services/graphql-gateway" "@llm-dev-ops/llm-marketplace-graphql-gateway"
 
 echo ""
 print_header "Dry Run Test"

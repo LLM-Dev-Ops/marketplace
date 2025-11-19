@@ -47,9 +47,9 @@ print_success "Logged in as: $NPM_USER"
 echo ""
 print_warning "This will publish the following packages to NPM:"
 echo "  - @llm-dev-ops/llm-marketplace-sdk"
-echo "  - @llm-dev-ops/model-marketplace"
-echo "  - @llm-dev-ops/tenant-management"
-echo "  - @llm-dev-ops/graphql-gateway"
+echo "  - @llm-dev-ops/llm-marketplace-model-marketplace"
+echo "  - @llm-dev-ops/llm-marketplace-tenant-management"
+echo "  - @llm-dev-ops/llm-marketplace-graphql-gateway"
 echo ""
 read -p "Are you sure you want to publish? (yes/no): " CONFIRM
 
@@ -81,27 +81,27 @@ else
 fi
 
 # Publish Model Marketplace
-print_warning "Publishing @llm-dev-ops/model-marketplace..."
+print_warning "Publishing @llm-dev-ops/llm-marketplace-model-marketplace..."
 if npm publish --workspace=services/model-marketplace --access public; then
-    print_success "Published @llm-dev-ops/model-marketplace"
+    print_success "Published @llm-dev-ops/llm-marketplace-model-marketplace"
 else
-    print_error "Failed to publish @llm-dev-ops/model-marketplace"
+    print_error "Failed to publish @llm-dev-ops/llm-marketplace-model-marketplace"
 fi
 
 # Publish Tenant Management
-print_warning "Publishing @llm-dev-ops/tenant-management..."
+print_warning "Publishing @llm-dev-ops/llm-marketplace-tenant-management..."
 if npm publish --workspace=services/tenant-management --access public; then
-    print_success "Published @llm-dev-ops/tenant-management"
+    print_success "Published @llm-dev-ops/llm-marketplace-tenant-management"
 else
-    print_error "Failed to publish @llm-dev-ops/tenant-management"
+    print_error "Failed to publish @llm-dev-ops/llm-marketplace-tenant-management"
 fi
 
 # Publish GraphQL Gateway
-print_warning "Publishing @llm-dev-ops/graphql-gateway..."
+print_warning "Publishing @llm-dev-ops/llm-marketplace-graphql-gateway..."
 if npm publish --workspace=services/graphql-gateway --access public; then
-    print_success "Published @llm-dev-ops/graphql-gateway"
+    print_success "Published @llm-dev-ops/llm-marketplace-graphql-gateway"
 else
-    print_error "Failed to publish @llm-dev-ops/graphql-gateway"
+    print_error "Failed to publish @llm-dev-ops/llm-marketplace-graphql-gateway"
 fi
 
 print_header "Publish Complete"
@@ -109,6 +109,6 @@ print_success "All packages have been published to NPM"
 print_success ""
 print_success "View packages at:"
 echo "  - https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-sdk"
-echo "  - https://www.npmjs.com/package/@llm-dev-ops/model-marketplace"
-echo "  - https://www.npmjs.com/package/@llm-dev-ops/tenant-management"
-echo "  - https://www.npmjs.com/package/@llm-dev-ops/graphql-gateway"
+echo "  - https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-model-marketplace"
+echo "  - https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-tenant-management"
+echo "  - https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-graphql-gateway"

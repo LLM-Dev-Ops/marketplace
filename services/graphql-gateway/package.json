@@ -1,5 +1,5 @@
 {
-  "name": "@llm-dev-ops/graphql-gateway",
+  "name": "@llm-dev-ops/llm-marketplace-graphql-gateway",
   "version": "1.1.1",
   "description": "GraphQL API Gateway for LLM Marketplace",
   "main": "dist/index.js",

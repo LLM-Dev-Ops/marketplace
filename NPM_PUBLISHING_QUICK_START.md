@@ -33,9 +33,9 @@ Make sure you're a member of the `@llm-dev-ops` organization on NPM:
 | Package Name | Description |
 |--------------|-------------|
 | `@llm-dev-ops/llm-marketplace-sdk` | Official JavaScript/TypeScript SDK |
-| `@llm-dev-ops/model-marketplace` | Fine-tuned model marketplace service |
-| `@llm-dev-ops/tenant-management` | Multi-tenancy management service |
-| `@llm-dev-ops/graphql-gateway` | Unified GraphQL API gateway |
+| `@llm-dev-ops/llm-marketplace-model-marketplace` | Fine-tuned model marketplace service |
+| `@llm-dev-ops/llm-marketplace-tenant-management` | Multi-tenancy management service |
+| `@llm-dev-ops/llm-marketplace-graphql-gateway` | Unified GraphQL API gateway |
 
 ---
 
@@ -139,9 +139,9 @@ npm run typecheck
 ```bash
 # Check if package is live on NPM
 npm view @llm-dev-ops/llm-marketplace-sdk
-npm view @llm-dev-ops/model-marketplace
-npm view @llm-dev-ops/tenant-management
-npm view @llm-dev-ops/graphql-gateway
+npm view @llm-dev-ops/llm-marketplace-model-marketplace
+npm view @llm-dev-ops/llm-marketplace-tenant-management
+npm view @llm-dev-ops/llm-marketplace-graphql-gateway
 
 # Install to test
 npm install @llm-dev-ops/llm-marketplace-sdk
@@ -250,9 +250,9 @@ npm view @llm-dev-ops/llm-marketplace-sdk
 ### Published Packages
 
 - https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-sdk
-- https://www.npmjs.com/package/@llm-dev-ops/model-marketplace
-- https://www.npmjs.com/package/@llm-dev-ops/tenant-management
-- https://www.npmjs.com/package/@llm-dev-ops/graphql-gateway
+- https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-model-marketplace
+- https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-tenant-management
+- https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-graphql-gateway
 
 ---
 

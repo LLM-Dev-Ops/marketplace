@@ -116,9 +116,9 @@ After publishing, your packages will be available at:
 | Package | NPM Link |
 |---------|----------|
 | **SDK** | https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-sdk |
-| **Model Marketplace** | https://www.npmjs.com/package/@llm-dev-ops/model-marketplace |
-| **Tenant Management** | https://www.npmjs.com/package/@llm-dev-ops/tenant-management |
-| **GraphQL Gateway** | https://www.npmjs.com/package/@llm-dev-ops/graphql-gateway |
+| **Model Marketplace** | https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-model-marketplace |
+| **Tenant Management** | https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-tenant-management |
+| **GraphQL Gateway** | https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-graphql-gateway |
 
 ---
 
@@ -141,9 +141,9 @@ npm run publish:dry-run            # See what would be published
 ```bash
 # Verify packages are live
 npm view @llm-dev-ops/llm-marketplace-sdk
-npm view @llm-dev-ops/model-marketplace
-npm view @llm-dev-ops/tenant-management
-npm view @llm-dev-ops/graphql-gateway
+npm view @llm-dev-ops/llm-marketplace-model-marketplace
+npm view @llm-dev-ops/llm-marketplace-tenant-management
+npm view @llm-dev-ops/llm-marketplace-graphql-gateway
 
 # Test installation
 npm install @llm-dev-ops/llm-marketplace-sdk
@@ -189,9 +189,9 @@ All NPM publishing infrastructure has been set up:
 ### Configuration Files:
 - ✅ `package.json` - Updated with npm workspaces and publish scripts
 - ✅ `sdks/javascript/package.json` - Configured for `@llm-dev-ops/llm-marketplace-sdk`
-- ✅ `services/model-marketplace/package.json` - Configured for `@llm-dev-ops/model-marketplace`
-- ✅ `services/tenant-management/package.json` - Configured for `@llm-dev-ops/tenant-management`
-- ✅ `services/graphql-gateway/package.json` - Configured for `@llm-dev-ops/graphql-gateway`
+- ✅ `services/model-marketplace/package.json` - Configured for `@llm-dev-ops/llm-marketplace-model-marketplace`
+- ✅ `services/tenant-management/package.json` - Configured for `@llm-dev-ops/llm-marketplace-tenant-management`
+- ✅ `services/graphql-gateway/package.json` - Configured for `@llm-dev-ops/llm-marketplace-graphql-gateway`
 
 ### NPM Configuration:
 - ✅ `.npmignore` files in all packages (exclude dev files)

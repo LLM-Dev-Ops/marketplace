@@ -153,9 +153,9 @@ jobs:
           echo "The following packages have been published to NPM:" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- [@llm-dev-ops/llm-marketplace-sdk](https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-sdk)" >> $GITHUB_STEP_SUMMARY
-          echo "- [@llm-dev-ops/model-marketplace](https://www.npmjs.com/package/@llm-dev-ops/model-marketplace)" >> $GITHUB_STEP_SUMMARY
-          echo "- [@llm-dev-ops/tenant-management](https://www.npmjs.com/package/@llm-dev-ops/tenant-management)" >> $GITHUB_STEP_SUMMARY
-          echo "- [@llm-dev-ops/graphql-gateway](https://www.npmjs.com/package/@llm-dev-ops/graphql-gateway)" >> $GITHUB_STEP_SUMMARY
+          echo "- [@llm-dev-ops/llm-marketplace-model-marketplace](https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-model-marketplace)" >> $GITHUB_STEP_SUMMARY
+          echo "- [@llm-dev-ops/llm-marketplace-tenant-management](https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-tenant-management)" >> $GITHUB_STEP_SUMMARY
+          echo "- [@llm-dev-ops/llm-marketplace-graphql-gateway](https://www.npmjs.com/package/@llm-dev-ops/llm-marketplace-graphql-gateway)" >> $GITHUB_STEP_SUMMARY
 
   publish-dry-run:
     needs: build
@@ -194,9 +194,9 @@ jobs:
 
             **Packages that will be published:**
             - @llm-dev-ops/llm-marketplace-sdk
-            - @llm-dev-ops/model-marketplace
-            - @llm-dev-ops/tenant-management
-            - @llm-dev-ops/graphql-gateway
+            - @llm-dev-ops/llm-marketplace-model-marketplace
+            - @llm-dev-ops/llm-marketplace-tenant-management
+            - @llm-dev-ops/llm-marketplace-graphql-gateway
 
             *This was a dry run. No packages were actually published.*`;
 
