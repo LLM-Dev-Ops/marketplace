@@ -1,0 +1,31 @@
+[package]
+name = "marketplace-benchmarks"
+version = "0.1.0"
+edition = "2021"
+authors = ["Marketplace Team"]
+description = "Comprehensive benchmarking framework for LLM Marketplace"
+license = "MIT"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+anyhow = "1.0"
+thiserror = "1.0"
+clap = { version = "4.5", features = ["derive"] }
+env_logger = "0.11"
+log = "0.4"
+hostname = "0.4"
+num_cpus = "1.16"
+sys-info = "0.9"
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bin]]
+name = "run_benchmarks"
+path = "src/bin/run_benchmarks.rs"
+
+[lib]
+name = "marketplace_benchmarks"
+path = "src/lib.rs"
