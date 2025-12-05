@@ -23,8 +23,8 @@ use tower_http::{
 use tracing::{error, info};
 
 use services::{
-    AnalyticsStreamer, ApiKeyManager, PolicyClient, QuotaManager, RateLimiter, RequestRouter,
-    SLAMonitor, UsageMeter,
+    AnalyticsStreamer, ApiKeyManager, PolicyClient, PolicyEngineClient, QuotaManager,
+    RateLimiter, RegistryClient, RequestRouter, SLAMonitor, ShieldClient, UsageMeter,
 };
 
 /// Application state shared across handlers
@@ -40,6 +40,10 @@ pub struct AppState {
     pub sla_monitor: SLAMonitor,
     pub policy_client: PolicyClient,
     pub analytics_streamer: AnalyticsStreamer,
+    // Phase 2B: Runtime consumption adapters for upstream LLM-Dev-Ops services
+    pub registry_client: RegistryClient,
+    pub shield_client: ShieldClient,
+    pub policy_engine_client: PolicyEngineClient,
 }
 
 /// Custom result type for handlers
@@ -93,13 +97,32 @@ async fn main() -> anyhow::Result<()> {
     let request_router = RequestRouter::new();
     let sla_monitor = SLAMonitor::new(db.clone());
 
-    // Initialize Policy Engine client
+    // Initialize Policy Engine client (existing - for real-time validation)
     let policy_engine_url = std::env::var("POLICY_ENGINE_URL")
         .unwrap_or_else(|_| "http://localhost:8080".to_string());
-    let policy_client = PolicyClient::new(policy_engine_url);
+    let policy_client = PolicyClient::new(policy_engine_url.clone());
 
     // Initialize Analytics streamer
     let analytics_streamer = AnalyticsStreamer::new(10000); // 10K event buffer
+
+    // Phase 2B: Initialize upstream LLM-Dev-Ops service consumers
+    // These are thin adapters for runtime consumption of metadata and rules
+
+    // LLM-Registry: Model metadata, versions, and exchangeable assets
+    let registry_url = std::env::var("LLM_REGISTRY_URL")
+        .unwrap_or_else(|_| "http://localhost:8081".to_string());
+    let registry_client = RegistryClient::new(registry_url);
+    info!("LLM-Registry client initialized");
+
+    // LLM-Shield: Filter packs, safety rules, and shielding metadata
+    let shield_url = std::env::var("LLM_SHIELD_URL")
+        .unwrap_or_else(|_| "http://localhost:8082".to_string());
+    let shield_client = ShieldClient::new(shield_url);
+    info!("LLM-Shield client initialized");
+
+    // LLM-Policy-Engine: Policy bundles, enforcement metadata, and compliance rules
+    let policy_engine_client = PolicyEngineClient::new(policy_engine_url);
+    info!("LLM-Policy-Engine client initialized");
 
     // Load quotas from database to Redis on startup
     info!("Loading quotas from database");
@@ -129,6 +152,10 @@ async fn main() -> anyhow::Result<()> {
         sla_monitor,
         policy_client,
         analytics_streamer,
+        // Phase 2B: Upstream LLM-Dev-Ops service consumers
+        registry_client,
+        shield_client,
+        policy_engine_client,
     };
 
     // Build application router

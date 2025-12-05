@@ -19,6 +19,11 @@ hostname = "0.4"
 num_cpus = "1.16"
 sys-info = "0.9"
 
+# LLM-Dev-Ops upstream dependencies (Phase 2A - compile-time only)
+llm-registry-core = { git = "https://github.com/LLM-Dev-Ops/registry", branch = "main" }
+llm-shield-core = { git = "https://github.com/LLM-Dev-Ops/shield", branch = "main" }
+llm-policy-engine = { git = "https://github.com/LLM-Dev-Ops/policy-engine", branch = "main" }
+
 [dev-dependencies]
 criterion = { version = "0.5", features = ["html_reports"] }
 
