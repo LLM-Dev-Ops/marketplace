@@ -15,6 +15,7 @@
     "npm": ">=10.0.0"
   },
   "workspaces": [
+    "packages/infra",
     "services/publishing",
     "services/admin",
     "services/model-marketplace",
@@ -75,7 +76,7 @@
     "@opentelemetry/sdk-trace-node": "^1.19.0",
     "@prisma/client": "^5.9.1",
     "axios": "^1.6.5",
-    "claude-flow": "^2.7.31",
+    "claude-flow": "^2.7.41",
     "dotenv": "^16.4.1",
     "elasticsearch": "^16.7.3",
     "fastify": "^4.25.2",

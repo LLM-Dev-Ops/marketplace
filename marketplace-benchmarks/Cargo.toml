@@ -1,31 +1,41 @@
 [package]
 name = "marketplace-benchmarks"
 version = "0.1.0"
-edition = "2021"
-authors = ["Marketplace Team"]
+edition.workspace = true
+authors.workspace = true
 description = "Comprehensive benchmarking framework for LLM Marketplace"
-license = "MIT"
+license.workspace = true
 
 [dependencies]
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-chrono = { version = "0.4", features = ["serde"] }
-anyhow = "1.0"
-thiserror = "1.0"
+# LLM-Dev-Ops Infra (Phase 2B - shared infrastructure)
+llm-infra = { workspace = true, features = ["config", "logging", "errors"] }
+
+# LLM-Dev-Ops upstream dependencies (Phase 2A - compile-time only)
+llm-registry-core.workspace = true
+llm-shield-core.workspace = true
+llm-policy-engine.workspace = true
+
+# Core dependencies
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+
+# CLI
 clap = { version = "4.5", features = ["derive"] }
-env_logger = "0.11"
-log = "0.4"
+
+# System info
 hostname = "0.4"
 num_cpus = "1.16"
 sys-info = "0.9"
 
-# LLM-Dev-Ops upstream dependencies (Phase 2A - compile-time only)
-llm-registry-core = { git = "https://github.com/LLM-Dev-Ops/registry", branch = "main" }
-llm-shield-core = { git = "https://github.com/LLM-Dev-Ops/shield", branch = "main" }
-llm-policy-engine = { git = "https://github.com/LLM-Dev-Ops/policy-engine", branch = "main" }
+# Logging (using infra, but keep env_logger for CLI)
+tracing.workspace = true
+tracing-subscriber.workspace = true
 
 [dev-dependencies]
-criterion = { version = "0.5", features = ["html_reports"] }
+criterion.workspace = true
 
 [[bin]]
 name = "run_benchmarks"
