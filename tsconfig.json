@@ -27,8 +27,11 @@
     "types": ["node", "jest"]
   },
   "include": [
+    "src/**/*",
     "services/publishing/**/*",
     "services/admin/**/*",
+    "agents/**/*",
+    "packages/**/*",
     "tests/**/*"
   ],
   "exclude": [

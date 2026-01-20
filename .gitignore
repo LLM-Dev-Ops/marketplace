@@ -280,3 +280,18 @@ heap-*
 data/
 uploads/
 downloads/
+
+# ===================================
+# Claude Code / AI Tools
+# ===================================
+.claude/
+.claude-flow/
+.swarm/
+.mcp.json
+CLAUDE.md
+
+# ===================================
+# Google Cloud SDK (local install)
+# ===================================
+google-cloud-sdk/
+google-cloud-cli-*.tar.gz
