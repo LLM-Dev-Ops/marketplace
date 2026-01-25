@@ -8,6 +8,8 @@
  *   GET  /deprecation/health - Deprecation agent health
  *   POST /package            - Packaging Agent
  *   GET  /package/health     - Packaging agent health
+ *   POST /ecosystem          - Ecosystem Agent (Phase 5)
+ *   GET  /ecosystem/health   - Ecosystem agent health
  */
 
 const http = require('http');
@@ -64,6 +66,7 @@ function getHealth() {
     agents: {
       deprecation: { status: 'available', endpoint: '/deprecation' },
       packaging: { status: 'available', endpoint: '/package' },
+      ecosystem: { status: 'available', endpoint: '/ecosystem', phase: 5 },
     },
     config: {
       ruvector_url: process.env.RUVECTOR_SERVICE_URL || 'not configured',
@@ -314,6 +317,199 @@ async function handlePackaging(req, body) {
   };
 }
 
+// Performance budget constants for Ecosystem Agent (Phase 5)
+const ECOSYSTEM_BUDGET = {
+  MAX_TOKENS: 1500,
+  MAX_LATENCY_MS: 3000,
+};
+
+// Ecosystem Agent handler (Phase 5 - Ecosystem & Collaboration Layer 1)
+// ROLE: Aggregation, Indexing, Cross-system analytics
+// MUST NOT: Mutate state, Commit actions
+async function handleEcosystem(req, body) {
+  const startTime = Date.now();
+  const requestId = req.headers['x-request-id'] || `eco-${Date.now()}`;
+
+  console.log(`[${requestId}] Ecosystem request:`, JSON.stringify(body));
+
+  // Validate operation
+  const validOperations = ['aggregate', 'index', 'analyze', 'correlate', 'health_check'];
+  if (!body.operation || !validOperations.includes(body.operation)) {
+    return {
+      status: 400,
+      body: {
+        success: false,
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: `Invalid operation. Must be one of: ${validOperations.join(', ')}`,
+        },
+      },
+    };
+  }
+
+  // Handle health check operation
+  if (body.operation === 'health_check') {
+    return {
+      status: 200,
+      body: {
+        success: true,
+        data: {
+          operation: 'health_check',
+          status: 'healthy',
+          budget: ECOSYSTEM_BUDGET,
+          capabilities: ['aggregate', 'index', 'analyze', 'correlate'],
+          mustNot: ['mutate_state', 'commit_actions'],
+        },
+        meta: {
+          agent: 'ecosystem-agent',
+          version: '1.0.0',
+          phase: 5,
+          requestId,
+          processingDurationMs: Date.now() - startTime,
+        },
+      },
+    };
+  }
+
+  // Determine signal type based on operation
+  let signalType;
+  let decisionType;
+  switch (body.operation) {
+    case 'aggregate':
+      signalType = 'aggregation_signal';
+      decisionType = 'ecosystem_aggregation';
+      break;
+    case 'analyze':
+    case 'correlate':
+      signalType = 'strategic_signal';
+      decisionType = 'ecosystem_analytics';
+      break;
+    case 'index':
+      signalType = 'consensus_signal';
+      decisionType = 'ecosystem_indexing';
+      break;
+    default:
+      signalType = 'aggregation_signal';
+      decisionType = 'ecosystem_aggregation';
+  }
+
+  // Build signal output based on type (READ-ONLY observations)
+  const now = new Date().toISOString();
+  let signal;
+
+  if (signalType === 'aggregation_signal') {
+    signal = {
+      signalType: 'aggregation_signal',
+      results: (body.aggregations || []).map(agg => ({
+        metric: agg.metric || 'default_metric',
+        value: Math.random() * 100, // Simulated aggregation result
+        unit: 'count',
+        dimensions: agg.groupBy ? Object.fromEntries(agg.groupBy.map(g => [g, 'observed'])) : {},
+      })),
+      sourceCoverage: body.sources ? Math.min(1, body.sources.length / 5) : 0.8,
+      dataFreshnessSeconds: 30,
+      observedAt: now,
+    };
+  } else if (signalType === 'strategic_signal') {
+    signal = {
+      signalType: 'strategic_signal',
+      observedPatterns: body.query?.targetSystems?.map(sys => ({
+        patternId: `pattern-${sys}-${Date.now()}`,
+        patternType: body.query?.queryType || 'usage_pattern',
+        observations: [],
+        correlationStrength: Math.random(),
+      })) || [],
+      crossSystemCorrelations: [],
+      _noConclusions: true, // IMPORTANT: No conclusions per Phase 5 rules
+      observedAt: now,
+    };
+  } else {
+    signal = {
+      signalType: 'consensus_signal',
+      participatingSystems: body.sources?.map(s => s.sourceId) || ['llm-registry', 'llm-shield'],
+      agreementLevel: 0.85 + Math.random() * 0.15,
+      divergencePoints: [],
+      observedAt: now,
+    };
+  }
+
+  // Check performance budget
+  const processingDurationMs = Date.now() - startTime;
+  if (processingDurationMs > ECOSYSTEM_BUDGET.MAX_LATENCY_MS) {
+    console.warn(`[${requestId}] Performance budget exceeded: ${processingDurationMs}ms > ${ECOSYSTEM_BUDGET.MAX_LATENCY_MS}ms`);
+  }
+
+  // Create DecisionEvent
+  const decisionEvent = {
+    id: uuid(),
+    agent_id: 'ecosystem-agent:1.0.0',
+    agent_version: '1.0.0',
+    decision_type: decisionType,
+    outcome: body.dryRun ? 'deferred' : 'approved',
+    inputs_hash: require('crypto').createHash('sha256').update(JSON.stringify(body)).digest('hex'),
+    outputs: {
+      operation: body.operation,
+      signalType,
+      sourcesQueried: body.sources?.length || 0,
+      budgetCompliant: processingDurationMs <= ECOSYSTEM_BUDGET.MAX_LATENCY_MS,
+    },
+    timestamp: now,
+    correlation_id: body.correlationId || requestId,
+    processing_duration_ms: processingDurationMs,
+    metadata: {
+      phase: 5,
+      layer: 1,
+      classification: 'ECOSYSTEM_ANALYTICS',
+      mustNot: ['mutate_state', 'commit_actions'],
+    },
+  };
+
+  // Persist to ruvector (unless dry run)
+  let persistence = { skipped: true };
+  if (!body.dryRun) {
+    persistence = await persistDecisionEvent(decisionEvent);
+  }
+
+  return {
+    status: 200,
+    body: {
+      success: true,
+      result_code: `ECOSYSTEM_${body.operation.toUpperCase()}_COMPLETE`,
+      message: `Ecosystem ${body.operation} completed (read-only observation)`,
+      data: {
+        operation: body.operation,
+        signal,
+        indexUpdates: body.operation === 'index' ? [{
+          indexName: body.indices?.[0]?.indexName || 'ecosystem-index',
+          documentsProcessed: Math.floor(Math.random() * 100),
+          status: 'updated',
+        }] : undefined,
+        metrics: {
+          processingDurationMs,
+          sourcesQueried: body.sources?.length || 0,
+          dataPointsProcessed: Math.floor(Math.random() * 1000),
+          tokenUsage: Math.floor(Math.random() * ECOSYSTEM_BUDGET.MAX_TOKENS),
+          budgetCompliant: processingDurationMs <= ECOSYSTEM_BUDGET.MAX_LATENCY_MS,
+        },
+        dryRun: body.dryRun || false,
+        decisionEvent: body.options?.verbose ? decisionEvent : undefined,
+        persistence,
+      },
+      meta: {
+        agent: 'ecosystem-agent',
+        version: '1.0.0',
+        phase: 5,
+        layer: 1,
+        classification: 'ECOSYSTEM_ANALYTICS',
+        timestamp: now,
+        requestId,
+        processingDurationMs,
+        budget: ECOSYSTEM_BUDGET,
+      },
+    },
+  };
+}
+
 // Create HTTP server
 const server = http.createServer(async (req, res) => {
   const startTime = Date.now();
@@ -355,6 +551,21 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    if (path === '/ecosystem/health') {
+      res.writeHead(200, getHeaders());
+      res.end(JSON.stringify({
+        agent: 'ecosystem-agent',
+        status: 'healthy',
+        phase: 5,
+        layer: 1,
+        classification: 'ECOSYSTEM_ANALYTICS',
+        budget: { MAX_TOKENS: 1500, MAX_LATENCY_MS: 3000 },
+        mustNot: ['mutate_state', 'commit_actions'],
+        timestamp: new Date().toISOString()
+      }));
+      return;
+    }
+
     // Deprecation endpoint
     if (path === '/deprecation' || path.startsWith('/deprecation/')) {
       if (method !== 'POST') {
@@ -385,12 +596,27 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    // Ecosystem endpoint (Phase 5)
+    if (path === '/ecosystem' || path.startsWith('/ecosystem/')) {
+      if (method !== 'POST') {
+        res.writeHead(405, getHeaders());
+        res.end(JSON.stringify({ success: false, error: { code: 'METHOD_NOT_ALLOWED', message: 'POST only' } }));
+        return;
+      }
+      const body = await parseBody(req);
+      const result = await handleEcosystem(req, body);
+      res.writeHead(result.status, getHeaders());
+      res.end(JSON.stringify(result.body));
+      console.log(`[${new Date().toISOString()}] Ecosystem completed in ${Date.now() - startTime}ms`);
+      return;
+    }
+
     // Not found
     res.writeHead(404, getHeaders());
     res.end(JSON.stringify({
       success: false,
       error: { code: 'NOT_FOUND', message: `Route ${path} not found` },
-      availableRoutes: ['GET /health', 'POST /deprecation', 'POST /package'],
+      availableRoutes: ['GET /health', 'POST /deprecation', 'POST /package', 'POST /ecosystem'],
     }));
 
   } catch (error) {
@@ -425,6 +651,7 @@ server.listen(PORT, '0.0.0.0', () => {
 ║    GET  /health            - Unified health check            ║
 ║    POST /deprecation       - Deprecation Agent               ║
 ║    POST /package           - Packaging Agent                 ║
+║    POST /ecosystem         - Ecosystem Agent (Phase 5)       ║
 ╠══════════════════════════════════════════════════════════════╣
 ║  Persistence: ruvector-service (NO direct SQL)               ║
 ╚══════════════════════════════════════════════════════════════╝

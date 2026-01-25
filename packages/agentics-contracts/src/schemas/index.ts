@@ -117,3 +117,49 @@ export {
   // Metadata
   PACKAGING_AGENT_METADATA
 } from './packaging-agent';
+
+// Ecosystem Agent schemas (Phase 5)
+export {
+  // Constants
+  ECOSYSTEM_PERFORMANCE_BUDGET,
+
+  // Enums
+  EcosystemSignalTypeSchema,
+  EcosystemSignalType,
+  EcosystemOperationSchema,
+  EcosystemOperation,
+  EcosystemDecisionTypeSchema,
+  EcosystemDecisionType,
+
+  // Input schemas
+  DataSourceSchema,
+  DataSource,
+  AggregationTargetSchema,
+  AggregationTarget,
+  IndexSpecSchema,
+  IndexSpec,
+  AnalyticsQuerySchema,
+  AnalyticsQuery,
+  EcosystemAgentInputSchema,
+  EcosystemAgentInput,
+
+  // Signal schemas
+  ConsensusSignalSchema,
+  ConsensusSignal,
+  AggregationSignalSchema,
+  AggregationSignal,
+  StrategicSignalSchema,
+  StrategicSignal,
+  EcosystemSignalSchema,
+  EcosystemSignal,
+
+  // Output schemas
+  EcosystemAgentOutputSchema,
+  EcosystemAgentOutput,
+
+  // Validation helpers
+  validateEcosystemInput,
+  validateEcosystemOutput,
+  safeValidateEcosystemInput,
+  validatePerformanceBudget
+} from './ecosystem-agent.schema';

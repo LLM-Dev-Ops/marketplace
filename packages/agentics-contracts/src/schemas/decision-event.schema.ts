@@ -18,7 +18,12 @@ export const DecisionTypeSchema = z.enum([
   'marketplace_version_release',
   'marketplace_withdraw',
   'marketplace_visibility_change',
-  'marketplace_lifecycle_transition'
+  'marketplace_lifecycle_transition',
+  // Phase 5: Ecosystem & Collaboration signals
+  'ecosystem_aggregation',
+  'ecosystem_indexing',
+  'ecosystem_analytics',
+  'ecosystem_correlation'
 ]);
 
 export type DecisionType = z.infer<typeof DecisionTypeSchema>;

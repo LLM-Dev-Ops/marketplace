@@ -13,7 +13,8 @@ import { z } from 'zod';
 export const AgentClassificationSchema = z.enum([
   'PACKAGING',
   'DISTRIBUTION',
-  'LIFECYCLE_MANAGEMENT'
+  'LIFECYCLE_MANAGEMENT',
+  'ECOSYSTEM_ANALYTICS'
 ]);
 
 export type AgentClassification = z.infer<typeof AgentClassificationSchema>;
@@ -236,6 +237,60 @@ export const REGISTERED_AGENTS: AgentRegistration[] = [
     healthCheckEndpoint: 'https://marketplace-agents.run.app/package/health',
     documentationUrl: 'https://docs.marketplace.example.com/agents/packaging',
     tags: ['packaging', 'distribution', 'bundling', 'artifact-management'],
+    enabled: true,
+    registeredAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    agentId: 'ecosystem-agent',
+    displayName: 'Ecosystem Agent',
+    description: 'Phase 5 - Aggregation, indexing, and cross-system analytics for ecosystem collaboration',
+    version: '1.0.0',
+    classification: 'ECOSYSTEM_ANALYTICS',
+    decisionType: 'ecosystem_analytics',
+    capabilities: [
+      'aggregate_cross_system_data',
+      'index_ecosystem_artifacts',
+      'analyze_usage_patterns',
+      'correlate_system_metrics',
+      'emit_consensus_signals',
+      'emit_aggregation_signals',
+      'emit_strategic_signals'
+    ],
+    endpoint: {
+      url: 'https://marketplace-agents.run.app/ecosystem',
+      method: 'POST',
+      timeoutMs: 3000, // MAX_LATENCY_MS budget
+      retry: {
+        maxAttempts: 2,
+        backoffMs: 500,
+        exponential: true
+      }
+    },
+    cliCommands: ['aggregate', 'index', 'analyze', 'correlate', 'health'],
+    inputSchemaRef: '@llm-marketplace/agentics-contracts/schemas#EcosystemAgentInput',
+    outputSchemaRef: '@llm-marketplace/agentics-contracts/schemas#EcosystemAgentOutput',
+    consumers: [
+      'LLM-Governance-Dashboard',
+      'LLM-Analytics-Hub',
+      'LLM-Federation-Gateway',
+      'Discovery Service'
+    ],
+    mustNot: [
+      'Mutate state',
+      'Commit actions',
+      'Execute workflows',
+      'Modify runtime behavior',
+      'Enforce policies or approvals',
+      'Draw conclusions from strategic signals',
+      'Trigger external workflows',
+      'Execute other agents',
+      'Connect directly to SQL'
+    ],
+    owner: 'marketplace-team',
+    healthCheckEndpoint: 'https://marketplace-agents.run.app/ecosystem/health',
+    documentationUrl: 'https://docs.marketplace.example.com/agents/ecosystem',
+    tags: ['ecosystem', 'aggregation', 'indexing', 'analytics', 'phase-5', 'collaboration'],
     enabled: true,
     registeredAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
