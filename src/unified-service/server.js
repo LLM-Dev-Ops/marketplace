@@ -14,6 +14,12 @@
 
 const http = require('http');
 const { URL } = require('url');
+const {
+  extractExecutionContext,
+  createRepoSpan,
+  executeAgentWithSpan,
+  buildExecutionResult,
+} = require('./execution-context');
 
 const SERVICE_NAME = process.env.SERVICE_NAME || 'llm-marketplace';
 const SERVICE_VERSION = process.env.SERVICE_VERSION || '1.0.0';
@@ -24,7 +30,7 @@ const PLATFORM_ENV = process.env.PLATFORM_ENV || 'development';
 const corsHeaders = {
   'Access-Control-Allow-Origin': process.env.CORS_ORIGIN || '*',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Request-Id, X-Correlation-Id',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Request-Id, X-Correlation-Id, X-Execution-Id, X-Parent-Span-Id',
   'Access-Control-Max-Age': '86400',
 };
 
@@ -105,6 +111,67 @@ async function persistDecisionEvent(event) {
     console.error('[ERROR] Failed to persist to ruvector:', error.message);
     return { persisted: false, error: error.message };
   }
+}
+
+// Execute an agent endpoint with full execution graph instrumentation.
+async function executeInstrumented(agentName, handlerFn, req, res, body) {
+  // Step 1: Extract and validate execution context
+  const ctxResult = extractExecutionContext(req, body);
+  if (!ctxResult.valid) {
+    res.writeHead(400, getHeaders());
+    res.end(JSON.stringify({
+      success: false,
+      error: {
+        code: 'EXECUTION_CONTEXT_REQUIRED',
+        message: ctxResult.error,
+      },
+    }));
+    return;
+  }
+
+  const executionContext = ctxResult.context;
+
+  // Step 2: Create repo-level span
+  const repoSpan = createRepoSpan(executionContext);
+
+  // Step 3: Execute the agent within a span
+  const { agentSpan, handlerResult } = await executeAgentWithSpan(
+    agentName,
+    repoSpan,
+    handlerFn,
+    req,
+    body
+  );
+
+  // Step 4: Build structured execution result
+  const execResult = buildExecutionResult(
+    repoSpan,
+    [agentSpan],
+    executionContext
+  );
+
+  // Step 5: Guard against invalid execution (no agent spans)
+  if (!execResult.valid) {
+    res.writeHead(500, getHeaders());
+    res.end(JSON.stringify({
+      success: false,
+      error: {
+        code: 'EXECUTION_INVALID',
+        message: execResult.error,
+      },
+      execution: execResult.result,
+    }));
+    return;
+  }
+
+  // Step 6: Return handler response enriched with execution graph
+  const enrichedResponse = {
+    ...handlerResult.body,
+    execution: execResult.result,
+  };
+
+  res.writeHead(handlerResult.status, getHeaders());
+  res.end(JSON.stringify(enrichedResponse));
 }
 
 // Deprecation Agent handler
@@ -574,9 +641,7 @@ const server = http.createServer(async (req, res) => {
         return;
       }
       const body = await parseBody(req);
-      const result = await handleDeprecation(req, body);
-      res.writeHead(result.status, getHeaders());
-      res.end(JSON.stringify(result.body));
+      await executeInstrumented('deprecation-agent', handleDeprecation, req, res, body);
       console.log(`[${new Date().toISOString()}] Deprecation completed in ${Date.now() - startTime}ms`);
       return;
     }
@@ -589,9 +654,7 @@ const server = http.createServer(async (req, res) => {
         return;
       }
       const body = await parseBody(req);
-      const result = await handlePackaging(req, body);
-      res.writeHead(result.status, getHeaders());
-      res.end(JSON.stringify(result.body));
+      await executeInstrumented('marketplace-packaging-agent', handlePackaging, req, res, body);
       console.log(`[${new Date().toISOString()}] Packaging completed in ${Date.now() - startTime}ms`);
       return;
     }
@@ -604,9 +667,7 @@ const server = http.createServer(async (req, res) => {
         return;
       }
       const body = await parseBody(req);
-      const result = await handleEcosystem(req, body);
-      res.writeHead(result.status, getHeaders());
-      res.end(JSON.stringify(result.body));
+      await executeInstrumented('ecosystem-agent', handleEcosystem, req, res, body);
       console.log(`[${new Date().toISOString()}] Ecosystem completed in ${Date.now() - startTime}ms`);
       return;
     }

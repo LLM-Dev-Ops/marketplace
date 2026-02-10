@@ -118,6 +118,26 @@ export {
   PACKAGING_AGENT_METADATA
 } from './packaging-agent';
 
+// Execution Span schemas (Foundational Execution Unit)
+export {
+  SpanStatusSchema,
+  type SpanStatus,
+  SpanTypeSchema,
+  type SpanType,
+  ExecutionSpanSchema,
+  type ExecutionSpan,
+  RepoSpanSchema,
+  type RepoSpan,
+  ArtifactSchema,
+  type Artifact,
+  AgentSpanSchema,
+  type AgentSpan,
+  ExecutionContextSchema,
+  type ExecutionContext,
+  RepoExecutionResultSchema,
+  type RepoExecutionResult,
+} from './execution-span.schema';
+
 // Ecosystem Agent schemas (Phase 5)
 export {
   // Constants
