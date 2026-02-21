@@ -697,9 +697,10 @@ process.on('SIGTERM', () => {
   server.close(() => process.exit(0));
 });
 
-// Start server
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`
+// Start server (only when run directly, not when imported as a module)
+if (require.main === module) {
+  server.listen(PORT, '0.0.0.0', () => {
+    console.log(`
 ╔══════════════════════════════════════════════════════════════╗
 ║           LLM-MARKETPLACE UNIFIED SERVICE                    ║
 ╠══════════════════════════════════════════════════════════════╣
@@ -716,7 +717,19 @@ server.listen(PORT, '0.0.0.0', () => {
 ╠══════════════════════════════════════════════════════════════╣
 ║  Persistence: ruvector-service (NO direct SQL)               ║
 ╚══════════════════════════════════════════════════════════════╝
-  `);
-});
+    `);
+  });
+}
 
-module.exports = { server };
+module.exports = {
+  server,
+  handleDeprecation,
+  handlePackaging,
+  handleEcosystem,
+  parseBody,
+  persistDecisionEvent,
+  uuid,
+  getHealth,
+  corsHeaders,
+  getHeaders,
+};

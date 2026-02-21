@@ -2,7 +2,7 @@
   "name": "llm-marketplace",
   "version": "1.1.0",
   "description": "Enterprise LLM Marketplace Platform - Discovery, Publishing, and Consumption of LLM Services",
-  "main": "dist/index.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/globalbusinessadvisors/llm-marketplace.git"
@@ -103,6 +103,7 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jest": "^27.6.3",
     "eslint-plugin-security": "^2.1.0",
+    "@google-cloud/functions-framework": "^3.3.0",
     "husky": "^8.0.3",
     "jest": "^29.7.0",
     "lint-staged": "^15.2.0",
