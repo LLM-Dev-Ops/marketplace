@@ -1,5 +1,5 @@
 /**
- * @llm-dev-ops/infra - Cache Module
+ * @llm-marketplace/infra - Cache Module
  *
  * Provides Redis-based caching utilities for LLM-Dev-Ops services.
  * Supports JSON serialization, TTL management, and pattern operations.

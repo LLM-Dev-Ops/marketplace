@@ -1,5 +1,5 @@
 /**
- * @llm-dev-ops/infra - Configuration Module
+ * @llm-marketplace/infra - Configuration Module
  *
  * Provides type-safe configuration loading and validation for LLM-Dev-Ops services.
  * Supports environment variables, defaults, and Zod schema validation.

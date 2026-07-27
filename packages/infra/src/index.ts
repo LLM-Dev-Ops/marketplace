@@ -1,5 +1,5 @@
 /**
- * @llm-dev-ops/infra
+ * @llm-marketplace/infra
  *
  * Shared infrastructure utilities for LLM-Dev-Ops ecosystem.
  * Provides configuration, logging, tracing, caching, retry, rate-limiting, and error handling.
@@ -169,7 +169,7 @@ export {
 } from './tracing';
 
 /**
- * Version of the @llm-dev-ops/infra package
+ * Version of the @llm-marketplace/infra package
  */
 export const VERSION = '1.0.0';
 
@@ -223,7 +223,7 @@ export function initInfra(options: InfraInitOptions): {
     cache = createCacheClient(options.redisConfig);
   }
 
-  logger.info(`Initialized @llm-dev-ops/infra v${VERSION} for ${options.serviceName}`);
+  logger.info(`Initialized @llm-marketplace/infra v${VERSION} for ${options.serviceName}`);
 
   return { logger, tracer, cache };
 }

@@ -47,7 +47,7 @@ llm-policy-engine = { git = "https://github.com/LLM-Dev-Ops/policy-engine", bran
 
 ### New Infrastructure Packages Created
 
-#### TypeScript Package: `@llm-dev-ops/infra`
+#### TypeScript Package: `@llm-marketplace/infra`
 
 **Location:** `/packages/infra/`
 
@@ -96,7 +96,7 @@ llm-policy-engine = { git = "https://github.com/LLM-Dev-Ops/policy-engine", bran
 
 ### Configuration Module
 
-**TypeScript:** `@llm-dev-ops/infra/config`
+**TypeScript:** `@llm-marketplace/infra/config`
 **Rust:** `llm_infra::config`
 
 Features:
@@ -107,7 +107,7 @@ Features:
 
 ### Logging Module
 
-**TypeScript:** `@llm-dev-ops/infra/logging`
+**TypeScript:** `@llm-marketplace/infra/logging`
 **Rust:** `llm_infra::logging`
 
 Features:
@@ -118,7 +118,7 @@ Features:
 
 ### Error Handling Module
 
-**TypeScript:** `@llm-dev-ops/infra/errors`
+**TypeScript:** `@llm-marketplace/infra/errors`
 **Rust:** `llm_infra::errors`
 
 Features:
@@ -129,7 +129,7 @@ Features:
 
 ### Caching Module
 
-**TypeScript:** `@llm-dev-ops/infra/cache`
+**TypeScript:** `@llm-marketplace/infra/cache`
 **Rust:** `llm_infra::cache` (feature: cache)
 
 Features:
@@ -141,7 +141,7 @@ Features:
 
 ### Retry Module
 
-**TypeScript:** `@llm-dev-ops/infra/retry`
+**TypeScript:** `@llm-marketplace/infra/retry`
 **Rust:** `llm_infra::retry` (feature: retry)
 
 Features:
@@ -152,7 +152,7 @@ Features:
 
 ### Rate Limiting Module
 
-**TypeScript:** `@llm-dev-ops/infra/rate-limit`
+**TypeScript:** `@llm-marketplace/infra/rate-limit`
 **Rust:** `llm_infra::rate_limit` (feature: rate-limit)
 
 Features:
@@ -163,7 +163,7 @@ Features:
 
 ### Tracing Module
 
-**TypeScript:** `@llm-dev-ops/infra/tracing`
+**TypeScript:** `@llm-marketplace/infra/tracing`
 
 Features:
 - OpenTelemetry integration
@@ -180,13 +180,13 @@ The following internal implementations can now be replaced with Infra modules:
 
 | Internal File | Infra Module | Status |
 |---------------|--------------|--------|
-| `services/publishing/src/common/logger.ts` | `@llm-dev-ops/infra/logging` | Available |
-| `services/publishing/src/common/errors.ts` | `@llm-dev-ops/infra/errors` | Available |
-| `services/publishing/src/common/redis.ts` | `@llm-dev-ops/infra/cache` | Available |
-| `services/publishing/src/config/index.ts` | `@llm-dev-ops/infra/config` | Available |
+| `services/publishing/src/common/logger.ts` | `@llm-marketplace/infra/logging` | Available |
+| `services/publishing/src/common/errors.ts` | `@llm-marketplace/infra/errors` | Available |
+| `services/publishing/src/common/redis.ts` | `@llm-marketplace/infra/cache` | Available |
+| `services/publishing/src/config/index.ts` | `@llm-marketplace/infra/config` | Available |
 | `services/consumption/src/utils/errors.rs` | `llm_infra::errors` | Available |
 | `services/consumption/src/services/rate_limiter.rs` | `llm_infra::rate_limit` | Available |
-| `services/graphql-gateway/src/plugins/caching.ts` | `@llm-dev-ops/infra/cache` | Available |
+| `services/graphql-gateway/src/plugins/caching.ts` | `@llm-marketplace/infra/cache` | Available |
 
 **Note:** Replacement of existing implementations should be done in a separate PR to minimize risk.
 
@@ -256,7 +256,7 @@ errors = []
 
 ```bash
 $ cd packages/infra && npm run build
-> @llm-dev-ops/infra@1.0.0 build
+> @llm-marketplace/infra@1.0.0 build
 > tsc
 # Build successful - no errors
 ```
@@ -294,10 +294,10 @@ import { logger } from '../common/logger';
 import { AppError } from '../common/errors';
 import { getCache, setCache } from '../common/redis';
 
-// After (using @llm-dev-ops/infra)
-import { getLogger } from '@llm-dev-ops/infra/logging';
-import { ValidationError, NotFoundError } from '@llm-dev-ops/infra/errors';
-import { createCacheClient } from '@llm-dev-ops/infra/cache';
+// After (using @llm-marketplace/infra)
+import { getLogger } from '@llm-marketplace/infra/logging';
+import { ValidationError, NotFoundError } from '@llm-marketplace/infra/errors';
+import { createCacheClient } from '@llm-marketplace/infra/cache';
 
 const logger = getLogger({ name: 'publishing-service' });
 const cache = createCacheClient();
