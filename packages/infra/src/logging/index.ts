@@ -1,5 +1,5 @@
 /**
- * @llm-dev-ops/infra - Logging Module
+ * @llm-marketplace/infra - Logging Module
  *
  * Provides structured logging with Pino for LLM-Dev-Ops services.
  * Supports child loggers, request/response logging, and metric logging.

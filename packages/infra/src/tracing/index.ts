@@ -1,5 +1,5 @@
 /**
- * @llm-dev-ops/infra - Tracing Module
+ * @llm-marketplace/infra - Tracing Module
  *
  * Provides distributed tracing with OpenTelemetry for LLM-Dev-Ops services.
  * Supports Jaeger export and automatic context propagation.

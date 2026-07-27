@@ -1,5 +1,5 @@
 /**
- * @llm-dev-ops/infra - Error Utilities Module
+ * @llm-marketplace/infra - Error Utilities Module
  *
  * Provides standardized error classes and error handling utilities
  * for LLM-Dev-Ops services.

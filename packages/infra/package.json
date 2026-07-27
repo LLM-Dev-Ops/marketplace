@@ -1,7 +1,7 @@
 {
-  "name": "@llm-dev-ops/infra",
+  "name": "@llm-marketplace/infra",
   "version": "1.0.0",
-  "description": "Shared infrastructure utilities for LLM-Dev-Ops ecosystem - configuration, logging, tracing, caching, retry, and error handling",
+  "description": "Shared infrastructure utilities for the LLM Marketplace platform - configuration, logging, tracing, caching, retry, and error handling",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "publishConfig": {
@@ -25,7 +25,7 @@
     "clean": "rimraf dist"
   },
   "keywords": [
-    "llm-dev-ops",
+    "llm-marketplace",
     "infra",
     "infrastructure",
     "logging",
@@ -36,16 +36,17 @@
     "retry",
     "rate-limiting"
   ],
-  "author": "LLM-Dev-Ops Team",
+  "author": "LLM Marketplace Team",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/LLM-Dev-Ops/infra.git"
+    "url": "https://github.com/LLM-Dev-Ops/marketplace.git",
+    "directory": "packages/infra"
   },
   "bugs": {
-    "url": "https://github.com/LLM-Dev-Ops/infra/issues"
+    "url": "https://github.com/LLM-Dev-Ops/marketplace/issues"
   },
-  "homepage": "https://github.com/LLM-Dev-Ops/infra#readme",
+  "homepage": "https://github.com/LLM-Dev-Ops/marketplace#readme",
   "dependencies": {
     "@opentelemetry/api": "^1.7.0",
     "@opentelemetry/exporter-jaeger": "^1.19.0",

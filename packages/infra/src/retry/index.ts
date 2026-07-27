@@ -1,5 +1,5 @@
 /**
- * @llm-dev-ops/infra - Retry Module
+ * @llm-marketplace/infra - Retry Module
  *
  * Provides retry utilities with exponential backoff for LLM-Dev-Ops services.
  * Supports configurable retry strategies and circuit breaker patterns.

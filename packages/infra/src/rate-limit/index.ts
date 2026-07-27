@@ -1,5 +1,5 @@
 /**
- * @llm-dev-ops/infra - Rate Limiting Module
+ * @llm-marketplace/infra - Rate Limiting Module
  *
  * Provides distributed rate limiting using Redis for LLM-Dev-Ops services.
  * Supports token bucket and sliding window algorithms.
